@@ -1,0 +1,213 @@
+<div class="custom-columns-component" style="margin:{{ section.settings.margin_comp }}px 0px">
+  {% for block in section.blocks limit: 4 %}
+    <div class="custom-column-section">
+      <div class="column-content-wrapper">
+        <!-- Image Section -->
+        <div class="column-media">
+          {% if block.settings.column_image %}
+            <img
+              src="{{ block.settings.column_image | img_url: '800x' }}"
+              alt="{{ block.settings.column_image.alt }}"
+              width="100%"
+              height="100%"
+              style="border-radius: {{ section.settings.image_border_radius }}px; object-fit: cover;"
+            >
+          {% endif %}
+        </div>
+
+        <!-- Text Content Section -->
+        <div class="column-text-content">
+          {% if block.settings.caption != blank %}
+            <div class="column-caption">{{ block.settings.caption }}</div>
+          {% endif %}
+
+          {% if block.settings.heading != blank %}
+            <h2 class="column-heading" style="font-size: {{ section.settings.heading_size }}px; margin:0;">
+              {{ block.settings.heading }}
+            </h2>
+          {% endif %}
+
+          {% if block.settings.content != blank %}
+            <div class="column-rich-text">{{ block.settings.content }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .custom-columns-component {
+    display: flex;
+    width: 100vw;
+    height: auto;
+  }
+
+  .custom-column-section {
+    width: 50%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 600px; /* Adjust this value as needed */
+  }
+
+  .column-content-wrapper {
+    display: flex;
+    align-items: {{ section.settings.content_alignment }};
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    height: 100%; /* Ensure wrapper fills full height */
+  }
+
+  .column-media, .column-text-content {
+    width: 50%;
+    padding: {{ section.settings.text_padding }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .column-media {
+    height: 100%;
+  }
+
+  .column-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fills the space without distortion */
+  }
+
+  .column-text-content {
+    display: block; /* Ensures normal text flow */
+  }
+
+  @media (max-width: 768px) {
+    .custom-columns-component {
+      flex-direction: column;
+    }
+    .custom-column-section {
+      width: 100%;
+    }
+    .column-content-wrapper {
+      flex-direction: column;
+    }
+    .column-media, .column-text-content {
+      width: 100%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Columns Component",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max container width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1200
+    },{
+      "type": "range",
+      "id": "margin_comp",
+      "label": "Container Margin",
+      "min": 15,
+      "max": 200,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "text_padding",
+      "label": "Text Padding",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Text Settings"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "30", "label": "Medium" },
+        { "value": "36", "label": "Large" },
+        { "value": "48", "label": "Extra Large" },
+        { "value": "56", "label": "Extra Extra Large" }
+      ],
+      "default": "36"
+    },{
+  "type": "select",
+  "id": "content_alignment",
+  "label": "Content Vertical Alignment",
+  "options": [
+    { "value": "flex-start", "label": "Top" },
+    { "value": "center", "label": "Center" },
+    { "value": "flex-end", "label": "Bottom" }
+  ],
+  "default": "center"
+}
+
+
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column Section",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "column_image",
+          "label": "Section Image"
+        },
+        {
+          "type": "richtext",
+          "id": "caption",
+          "label": "Section Caption",
+          "default": "<p>Short Line</p>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Section Heading",
+          "default": "Discover Our Features"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Section Content",
+          "default": "<p>Share your unique value propositions here. Use compelling text to engage visitors.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Columns Component",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}
