@@ -116,7 +116,7 @@
 
 
     
-    {% assign items = shop.metaobjects.xtep_advantage_sustainable.values  %}
+    {% assign items = shop.metaobjects.metaobject_name.values  %}
   
     {% for item in items  %}
 
