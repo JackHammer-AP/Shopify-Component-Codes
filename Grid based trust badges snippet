@@ -1,0 +1,35 @@
+<style>
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+  }
+
+  .box {
+    text-align: center;
+  }
+
+  .box img {
+    width: 100%;
+    max-width: 60px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.5rem;
+  }
+
+  .box p {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    margin: 0;
+  }
+</style>
+
+<div class="specs">
+  {% for badge in shop.metaobjects.metaobject_name.values %}
+    <div class="box">
+      <img src="{{ badge.image | img_url: '100x100' }}" alt="{{ badge.label }}">
+      <p>{{ badge.label }}</p>
+    </div>
+  {% endfor %}
+</div>
